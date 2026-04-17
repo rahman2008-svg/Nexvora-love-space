@@ -1,152 +1,219 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Nexvora Love Space</title>
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexvora Love Space</title>
 
 <style>
 
-*{
-box-sizing:border-box;
-}
-
+/* 🌈 BACKGROUND */
 body{
 margin:0;
-font-family: 'Segoe UI', sans-serif;
-background:linear-gradient(135deg,#ff4d6d,#ff99b6);
+font-family:'Segoe UI',sans-serif;
+background:linear-gradient(135deg,#ff4d6d,#ff99b6,#ffd6e0,#ffc2d1);
+background-size:400% 400%;
+animation:bg 10s infinite;
 display:flex;
 justify-content:center;
 align-items:center;
-height:100vh;
-color:#fff;
+min-height:100vh;
 }
 
-/* MAIN CARD */
-.card{
+@keyframes bg{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
+}
+
+/* 📦 CARD */
+.container{
+width:95%;
+max-width:500px;
 background:rgba(255,255,255,0.15);
 backdrop-filter:blur(20px);
-padding:25px;
-border-radius:20px;
-width:92%;
-max-width:420px;
-text-align:center;
-box-shadow:0 8px 30px rgba(0,0,0,0.2);
-animation:fadeIn 0.8s ease;
+border-radius:25px;
+padding:20px;
+color:white;
+box-shadow:0 10px 40px rgba(0,0,0,0.2);
+animation:fadeIn 0.7s ease;
 }
 
-/* ANIMATION */
 @keyframes fadeIn{
 from{opacity:0;transform:translateY(30px)}
 to{opacity:1;transform:translateY(0)}
 }
 
 h1{
-margin:0;
-font-size:22px;
-font-weight:600;
+text-align:center;
+margin-bottom:10px;
 }
 
 .subtitle{
+text-align:center;
 font-size:13px;
-opacity:0.9;
-margin-bottom:15px;
+opacity:0.8;
 }
 
-/* INPUTS */
-input, textarea, select{
+/* 🎯 CATEGORY GRID */
+.categories{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(80px,1fr));
+gap:8px;
+margin-top:15px;
+}
+
+.cat{
+padding:8px;
+border-radius:12px;
+background:rgba(255,255,255,0.2);
+text-align:center;
+cursor:pointer;
+font-size:13px;
+transition:0.3s;
+}
+
+.cat:hover{
+transform:scale(1.05);
+}
+
+.active{
+background:#ff4d6d;
+}
+
+/* 📝 INPUT */
+input,textarea{
 width:100%;
+margin-top:10px;
 padding:12px;
-margin:8px 0;
 border:none;
 border-radius:12px;
-font-size:14px;
 outline:none;
-background:rgba(255,255,255,0.9);
-color:#333;
+font-size:14px;
 }
 
 textarea{
-height:90px;
+height:80px;
 resize:none;
 }
 
-/* BUTTON */
+/* 🔘 BUTTON */
 button{
 width:100%;
 padding:12px;
-background:#ff4d6d;
-color:white;
+margin-top:10px;
 border:none;
 border-radius:12px;
-font-weight:bold;
+background:#ff4d6d;
+color:white;
 font-size:15px;
 cursor:pointer;
 transition:0.3s;
 }
 
 button:hover{
-background:#ff1f4b;
-transform:scale(1.04);
+transform:scale(1.05);
 }
 
-/* RESULT */
-#res{
+/* 🔗 LINK BOX */
+#linkBox{
 margin-top:10px;
-font-size:14px;
+background:rgba(0,0,0,0.2);
+padding:10px;
+border-radius:10px;
+word-break:break-all;
+font-size:13px;
 }
 
-a{
-color:#fff;
-font-weight:bold;
-text-decoration:underline;
+/* 📱 RESPONSIVE */
+@media(min-width:768px){
+.container{
+max-width:600px;
+padding:30px;
+}
+textarea{
+height:100px;
+}
 }
 
-/* FOOTER */
-.footer{
-margin-top:15px;
+/* 💖 FLOAT HEART */
+.heart{
+position:absolute;
+color:white;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+from{transform:translateY(100vh);opacity:1}
+to{transform:translateY(-10vh);opacity:0}
+}
+
+/* 🔻 FOOTER */
+footer{
+position:fixed;
+bottom:10px;
+width:100%;
+text-align:center;
+color:white;
 font-size:12px;
-opacity:0.85;
+opacity:0.8;
 }
 
 </style>
-
 </head>
 
 <body>
 
-<div class="card">
+<div class="container">
 
 <h1>💖 Nexvora Love Space</h1>
 <div class="subtitle">Create Beautiful Love Letters & Invitations</div>
 
-<input id="title" placeholder="Enter Title (e.g. I Love You)">
-<textarea id="content" placeholder="Write your message..."></textarea>
+<!-- 🎯 CATEGORY -->
+<div class="categories">
+<div class="cat active" onclick="setCat('love',this)">💖 Love</div>
+<div class="cat" onclick="setCat('invite',this)">🎉 Invite</div>
+<div class="cat" onclick="setCat('birthday',this)">🎂 Birthday</div>
+<div class="cat" onclick="setCat('friend',this)">🤝 Friend</div>
+<div class="cat" onclick="setCat('sorry',this)">💔 Sorry</div>
+<div class="cat" onclick="setCat('anniversary',this)">💍 Anniversary</div>
+<div class="cat" onclick="setCat('crush',this)">😍 Crush</div>
+<div class="cat" onclick="setCat('proposal',this)">💌 Proposal</div>
+</div>
 
-<select id="mode">
-<option value="love">💖 Love Letter</option>
-<option value="invite">📩 Invitation</option>
-<option value="birthday">🎂 Birthday</option>
-<option value="event">🎉 Event</option>
-</select>
+<input id="sender" placeholder="Your Name 💫">
+<input id="title" placeholder="Title 💌">
+<textarea id="content" placeholder="Write your message ❤️"></textarea>
 
-<button onclick="create()">✨ Create Page</button>
+<button onclick="create()">✨ Create Link</button>
 
-<div id="res"></div>
+<div id="linkBox"></div>
 
-<div class="footer">
+<button onclick="copy()">📋 Copy Link</button>
+
+</div>
+
+<footer>
 Abdur Rahman | Nexvora Lab's Ofc
-</div>
-
-</div>
+</footer>
 
 <script>
 
+let category="love";
+let lastLink="";
+
+/* 🎯 CATEGORY SELECT */
+function setCat(c,el){
+category=c;
+document.querySelectorAll(".cat").forEach(e=>e.classList.remove("active"));
+el.classList.add("active");
+}
+
+/* 🚀 CREATE */
 async function create(){
 
+const sender=document.getElementById("sender").value;
 const title=document.getElementById("title").value;
 const content=document.getElementById("content").value;
-const mode=document.getElementById("mode").value;
 
 if(!title || !content){
 alert("Please fill all fields");
@@ -156,24 +223,38 @@ return;
 const res=await fetch("/api/create",{
 method:"POST",
 headers:{"Content-Type":"application/json"},
-body:JSON.stringify({title,content,mode})
+body:JSON.stringify({sender,title,content,category})
 });
 
 const data=await res.json();
 
-document.getElementById("res").innerHTML=`
-<p>🔗 <a href="${data.link}" target="_blank">Open Your Page</a></p>
-<button onclick="copyLink('${data.link}')">📋 Copy Link</button>
-`;
+lastLink=data.link;
 
+document.getElementById("linkBox").innerHTML="🔗 "+data.link;
 }
 
-/* COPY */
-function copyLink(link){
-navigator.clipboard.writeText(link)
-.then(()=>alert("Link copied ✔"))
-.catch(()=>prompt("Copy:",link));
+/* 📋 COPY */
+function copy(){
+if(!lastLink){
+alert("Create link first");
+return;
 }
+navigator.clipboard.writeText(lastLink);
+alert("Copied ✔");
+}
+
+/* 💖 HEART ANIMATION */
+setInterval(()=>{
+let heart=document.createElement("div");
+heart.innerHTML="💖";
+heart.className="heart";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(Math.random()*20+10)+"px";
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),6000);
+
+},400);
 
 </script>
 
