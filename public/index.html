@@ -1,113 +1,180 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Nexvora App</title>
+<title>Nexvora Love Space</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+
+*{
+box-sizing:border-box;
+}
+
 body{
 margin:0;
-font-family:Arial;
-background:linear-gradient(135deg,#ff758c,#ff99b6);
+font-family: 'Segoe UI', sans-serif;
+background:linear-gradient(135deg,#ff4d6d,#ff99b6);
 display:flex;
 justify-content:center;
 align-items:center;
 height:100vh;
+color:#fff;
 }
 
-.box{
-background:white;
-padding:20px;
-border-radius:15px;
-width:90%;
-max-width:400px;
+/* MAIN CARD */
+.card{
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(20px);
+padding:25px;
+border-radius:20px;
+width:92%;
+max-width:420px;
 text-align:center;
+box-shadow:0 8px 30px rgba(0,0,0,0.2);
+animation:fadeIn 0.8s ease;
 }
 
-input,textarea,select{
+/* ANIMATION */
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(30px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+h1{
+margin:0;
+font-size:22px;
+font-weight:600;
+}
+
+.subtitle{
+font-size:13px;
+opacity:0.9;
+margin-bottom:15px;
+}
+
+/* INPUTS */
+input, textarea, select{
 width:100%;
-padding:10px;
+padding:12px;
 margin:8px 0;
-border-radius:10px;
-border:1px solid #ddd;
+border:none;
+border-radius:12px;
+font-size:14px;
+outline:none;
+background:rgba(255,255,255,0.9);
+color:#333;
 }
 
+textarea{
+height:90px;
+resize:none;
+}
+
+/* BUTTON */
 button{
 width:100%;
 padding:12px;
 background:#ff4d6d;
 color:white;
 border:none;
-border-radius:10px;
+border-radius:12px;
+font-weight:bold;
+font-size:15px;
 cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#ff1f4b;
+transform:scale(1.04);
+}
+
+/* RESULT */
+#res{
+margin-top:10px;
+font-size:14px;
 }
 
 a{
-color:#ff4d6d;
+color:#fff;
 font-weight:bold;
+text-decoration:underline;
 }
 
-footer{
-margin-top:10px;
+/* FOOTER */
+.footer{
+margin-top:15px;
 font-size:12px;
-opacity:0.7;
+opacity:0.85;
 }
+
 </style>
 
 </head>
 
 <body>
 
-<div class="box">
+<div class="card">
 
-<h2>💖 Nexvora LoveSpace</h2>
+<h1>💖 Nexvora Love Space</h1>
+<div class="subtitle">Create Beautiful Love Letters & Invitations</div>
 
-<input id="title" placeholder="Title">
-<textarea id="content" placeholder="Message"></textarea>
+<input id="title" placeholder="Enter Title (e.g. I Love You)">
+<textarea id="content" placeholder="Write your message..."></textarea>
 
 <select id="mode">
 <option value="love">💖 Love Letter</option>
 <option value="invite">📩 Invitation</option>
+<option value="birthday">🎂 Birthday</option>
+<option value="event">🎉 Event</option>
 </select>
 
-<select id="category">
-<option value="general">General</option>
-<option value="romantic">Romantic</option>
-<option value="birthday">Birthday</option>
-<option value="wedding">Wedding</option>
-<option value="event">Event</option>
-</select>
+<button onclick="create()">✨ Create Page</button>
 
-<button onclick="create()">Create Page</button>
+<div id="res"></div>
 
-<p id="res"></p>
-
-<footer>
-© Abdur Rahman | Nexvora Lab's Ofc
-</footer>
+<div class="footer">
+Abdur Rahman | Nexvora Lab's Ofc
+</div>
 
 </div>
 
 <script>
+
 async function create(){
 
 const title=document.getElementById("title").value;
 const content=document.getElementById("content").value;
 const mode=document.getElementById("mode").value;
-const category=document.getElementById("category").value;
+
+if(!title || !content){
+alert("Please fill all fields");
+return;
+}
 
 const res=await fetch("/api/create",{
 method:"POST",
 headers:{"Content-Type":"application/json"},
-body:JSON.stringify({title,content,mode,category})
+body:JSON.stringify({title,content,mode})
 });
 
 const data=await res.json();
 
-document.getElementById("res").innerHTML=
-`🔗 <a href="${data.link}" target="_blank">Open Page</a>`;
+document.getElementById("res").innerHTML=`
+<p>🔗 <a href="${data.link}" target="_blank">Open Your Page</a></p>
+<button onclick="copyLink('${data.link}')">📋 Copy Link</button>
+`;
+
 }
+
+/* COPY */
+function copyLink(link){
+navigator.clipboard.writeText(link)
+.then(()=>alert("Link copied ✔"))
+.catch(()=>prompt("Copy:",link));
+}
+
 </script>
 
 </body>

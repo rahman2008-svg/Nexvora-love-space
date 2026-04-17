@@ -59,6 +59,36 @@
       "category": "general",
       "music": "/music/soft.mp3",
       "views": 1
+    },
+    {
+      "id": "0DbGpT",
+      "slug": "love-you-",
+      "title": "Love you ",
+      "content": "I love you ",
+      "mode": "love",
+      "category": "general",
+      "music": "/music/soft.mp3",
+      "views": 2
+    },
+    {
+      "id": "3sstw8",
+      "slug": "proposal-letter-",
+      "title": "Proposal letter ",
+      "content": "Hi I'm Abdur Rahman. I just want to say you something \" I love you 💕",
+      "mode": "love",
+      "category": "general",
+      "music": "/music/soft.mp3",
+      "views": 0
+    },
+    {
+      "id": "4WqXa6",
+      "slug": "proposal-letter-",
+      "title": "Proposal letter ",
+      "content": "Hi I'm Abdur Rahman. I just want to say you something \" I love you 💕",
+      "mode": "love",
+      "category": "general",
+      "music": "/music/soft.mp3",
+      "views": 1
     }
   ]
 }
