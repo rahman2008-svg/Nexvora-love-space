@@ -1,90 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nexvora Love Space</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
 <style>
 
-/* 🌈 BACKGROUND */
-body{
+*{
 margin:0;
-font-family:'Segoe UI',sans-serif;
-background:linear-gradient(135deg,#ff4d6d,#ff99b6,#ffd6e0,#ffc2d1);
-background-size:400% 400%;
-animation:bg 10s infinite;
-display:flex;
-justify-content:center;
-align-items:center;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
 min-height:100vh;
-}
-
-@keyframes bg{
-0%{background-position:0% 50%}
-50%{background-position:100% 50%}
-100%{background-position:0% 50%}
-}
-
-/* 📦 CARD */
-.container{
-width:95%;
-max-width:500px;
-background:rgba(255,255,255,0.15);
-backdrop-filter:blur(20px);
-border-radius:25px;
+background:linear-gradient(135deg,#ff4d6d,#ff99b6,#ffe3ec);
+display:flex;
+flex-direction:column;
+align-items:center;
 padding:20px;
 color:white;
-box-shadow:0 10px 40px rgba(0,0,0,0.2);
-animation:fadeIn 0.7s ease;
 }
 
-@keyframes fadeIn{
-from{opacity:0;transform:translateY(30px)}
-to{opacity:1;transform:translateY(0)}
-}
-
-h1{
+/* HEADER */
+.header{
 text-align:center;
-margin-bottom:10px;
-}
-
-.subtitle{
-text-align:center;
-font-size:13px;
-opacity:0.8;
-}
-
-/* 🎯 CATEGORY GRID */
-.categories{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(80px,1fr));
-gap:8px;
-margin-top:15px;
-}
-
-.cat{
-padding:8px;
-border-radius:12px;
-background:rgba(255,255,255,0.2);
-text-align:center;
-cursor:pointer;
-font-size:13px;
-transition:0.3s;
-}
-
-.cat:hover{
-transform:scale(1.05);
-}
-
-.active{
-background:#ff4d6d;
-}
-
-/* 📝 INPUT */
-input,textarea{
-width:100%;
 margin-top:10px;
+}
+
+.header h1{
+font-size:28px;
+font-weight:800;
+}
+
+.header p{
+font-size:13px;
+opacity:0.9;
+}
+
+/* CARD */
+.card{
+width:100%;
+max-width:420px;
+margin-top:20px;
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(20px);
+border-radius:22px;
+padding:18px;
+box-shadow:0 15px 40px rgba(0,0,0,0.2);
+}
+
+/* INPUTS */
+input, textarea, select{
+width:100%;
 padding:12px;
+margin-top:10px;
 border:none;
 border-radius:12px;
 outline:none;
@@ -92,70 +66,74 @@ font-size:14px;
 }
 
 textarea{
-height:80px;
+height:120px;
 resize:none;
 }
 
-/* 🔘 BUTTON */
-button{
+/* BUTTON */
+.btn{
 width:100%;
 padding:12px;
-margin-top:10px;
+margin-top:12px;
 border:none;
-border-radius:12px;
-background:#ff4d6d;
+border-radius:14px;
+background:linear-gradient(135deg,#ff4d6d,#ff2e63);
 color:white;
-font-size:15px;
+font-weight:600;
 cursor:pointer;
 transition:0.3s;
 }
 
-button:hover{
-transform:scale(1.05);
+.btn:hover{
+transform:scale(1.03);
 }
 
-/* 🔗 LINK BOX */
-#linkBox{
-margin-top:10px;
-background:rgba(0,0,0,0.2);
+/* LINK BOX */
+.linkBox{
+margin-top:12px;
 padding:10px;
-border-radius:10px;
+background:rgba(255,255,255,0.2);
+border-radius:12px;
+font-size:12px;
 word-break:break-all;
-font-size:13px;
 }
 
-/* 📱 RESPONSIVE */
-@media(min-width:768px){
-.container{
-max-width:600px;
-padding:30px;
-}
-textarea{
-height:100px;
-}
-}
-
-/* 💖 FLOAT HEART */
-.heart{
-position:absolute;
-color:white;
-animation:float 6s linear infinite;
-}
-
-@keyframes float{
-from{transform:translateY(100vh);opacity:1}
-to{transform:translateY(-10vh);opacity:0}
-}
-
-/* 🔻 FOOTER */
-footer{
-position:fixed;
-bottom:10px;
+/* COPY BUTTON */
+.copyBtn{
+margin-top:8px;
+padding:8px;
 width:100%;
+border:none;
+border-radius:10px;
+background:white;
+color:#ff2e63;
+font-weight:600;
+cursor:pointer;
+}
+
+/* CATEGORY */
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px;
+margin-top:12px;
+}
+
+.cat{
+background:rgba(255,255,255,0.2);
+padding:10px;
+border-radius:12px;
 text-align:center;
-color:white;
+font-size:11px;
+cursor:pointer;
+}
+
+/* FOOTER */
+footer{
+margin-top:25px;
 font-size:12px;
 opacity:0.8;
+text-align:center;
 }
 
 </style>
@@ -163,32 +141,42 @@ opacity:0.8;
 
 <body>
 
-<div class="container">
-
+<div class="header">
 <h1>💖 Nexvora Love Space</h1>
-<div class="subtitle">Create Beautiful Love Letters & Invitations</div>
-
-<!-- 🎯 CATEGORY -->
-<div class="categories">
-<div class="cat active" onclick="setCat('love',this)">💖 Love</div>
-<div class="cat" onclick="setCat('invite',this)">🎉 Invite</div>
-<div class="cat" onclick="setCat('birthday',this)">🎂 Birthday</div>
-<div class="cat" onclick="setCat('friend',this)">🤝 Friend</div>
-<div class="cat" onclick="setCat('sorry',this)">💔 Sorry</div>
-<div class="cat" onclick="setCat('anniversary',this)">💍 Anniversary</div>
-<div class="cat" onclick="setCat('crush',this)">😍 Crush</div>
-<div class="cat" onclick="setCat('proposal',this)">💌 Proposal</div>
+<p>Create Love • Emotion • Invitation Pages</p>
 </div>
 
-<input id="sender" placeholder="Your Name 💫">
-<input id="title" placeholder="Title 💌">
+<div class="card">
+
+<input id="title" placeholder="Enter Title 💌">
+
 <textarea id="content" placeholder="Write your message ❤️"></textarea>
 
-<button onclick="create()">✨ Create Link</button>
+<input id="sender" placeholder="Your Name 👤">
 
-<div id="linkBox"></div>
+<select id="category">
+<option>💖 Love</option>
+<option>🎉 Invitation</option>
+<option>🎂 Birthday</option>
+<option>🤝 Friend</option>
+<option>💔 Sorry</option>
+<option>💍 Anniversary</option>
+</select>
 
-<button onclick="copy()">📋 Copy Link</button>
+<button class="btn" onclick="create()">✨ Create Page</button>
+
+<div id="link" class="linkBox">Your link will appear here...</div>
+
+<button class="copyBtn" onclick="copyLink()">📋 Copy Link</button>
+
+<div class="grid">
+<div class="cat">💖 Love</div>
+<div class="cat">🎉 Invite</div>
+<div class="cat">🎂 Birthday</div>
+<div class="cat">🤝 Friend</div>
+<div class="cat">💔 Sorry</div>
+<div class="cat">💍 Love</div>
+</div>
 
 </div>
 
@@ -198,63 +186,39 @@ Abdur Rahman | Nexvora Lab's Ofc
 
 <script>
 
-let category="love";
 let lastLink="";
 
-/* 🎯 CATEGORY SELECT */
-function setCat(c,el){
-category=c;
-document.querySelectorAll(".cat").forEach(e=>e.classList.remove("active"));
-el.classList.add("active");
-}
-
-/* 🚀 CREATE */
+/* CREATE PAGE */
 async function create(){
 
-const sender=document.getElementById("sender").value;
 const title=document.getElementById("title").value;
 const content=document.getElementById("content").value;
-
-if(!title || !content){
-alert("Please fill all fields");
-return;
-}
+const category=document.getElementById("category").value;
+const sender=document.getElementById("sender").value;
 
 const res=await fetch("/api/create",{
 method:"POST",
 headers:{"Content-Type":"application/json"},
-body:JSON.stringify({sender,title,content,category})
+body:JSON.stringify({title,content,category,sender})
 });
 
 const data=await res.json();
 
 lastLink=data.link;
 
-document.getElementById("linkBox").innerHTML="🔗 "+data.link;
+document.getElementById("link").innerHTML=
+"🔗 <b>Your Link:</b><br>"+data.link;
 }
 
-/* 📋 COPY */
-function copy(){
+/* COPY LINK */
+function copyLink(){
 if(!lastLink){
-alert("Create link first");
+alert("No link yet!");
 return;
 }
 navigator.clipboard.writeText(lastLink);
-alert("Copied ✔");
+alert("Link Copied ✔");
 }
-
-/* 💖 HEART ANIMATION */
-setInterval(()=>{
-let heart=document.createElement("div");
-heart.innerHTML="💖";
-heart.className="heart";
-heart.style.left=Math.random()*100+"vw";
-heart.style.fontSize=(Math.random()*20+10)+"px";
-document.body.appendChild(heart);
-
-setTimeout(()=>heart.remove(),6000);
-
-},400);
 
 </script>
 

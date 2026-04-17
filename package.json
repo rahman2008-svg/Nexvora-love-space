@@ -18,5 +18,13 @@
     "express": "^5.2.1",
     "mongoose": "^9.4.1",
     "nanoid": "^5.1.9"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rahman2008-svg/Nexvora-love-space.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rahman2008-svg/Nexvora-love-space/issues"
+  },
+  "homepage": "https://github.com/rahman2008-svg/Nexvora-love-space#readme"
 }
