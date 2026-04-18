@@ -1,196 +1,213 @@
 const express = require("express");
 const fs = require("fs");
-const cors = require("cors");
-const { nanoid } = require("nanoid");
 const path = require("path");
+const { nanoid } = require("nanoid");
 
 const app = express();
-app.use(cors());
-app.use(express.json());
 
-/* 🔥 FRONTEND */
+app.use(express.json());
 app.use(express.static("public"));
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public/index.html"));
-});
-
-/* 📁 DATABASE */
 const DB = "database.json";
 
-/* 📥 LOAD */
-function loadDB() {
-  try {
-    return JSON.parse(fs.readFileSync(DB));
-  } catch {
-    return { posts: [] };
-  }
+/* 📦 LOAD DB */
+function loadDB(){
+try{
+return JSON.parse(fs.readFileSync(DB));
+}catch{
+return {posts:[]};
+}
 }
 
-/* 💾 SAVE */
-function saveDB(data) {
-  try {
-    fs.writeFileSync(DB + ".tmp", JSON.stringify(data, null, 2));
-    fs.renameSync(DB + ".tmp", DB);
-  } catch (e) {
-    console.log("Save Error:", e);
-  }
+/* 💾 SAVE DB */
+function saveDB(data){
+fs.writeFileSync(DB, JSON.stringify(data,null,2));
 }
 
-/* 🚀 CREATE LINK */
-app.post("/api/post", (req, res) => {
-  const { title, content, category, sender } = req.body;
+/* 🚀 CREATE POST */
+app.post("/api/post",(req,res)=>{
+const db = loadDB();
 
-  if (!title || !content) {
-    return res.json({ success: false, msg: "Missing data" });
-  }
+const id = nanoid(10);
 
-  const db = loadDB();
+const post = {
+id,
+title:req.body.title,
+content:req.body.content,
+sender:req.body.sender,
+time:Date.now()
+};
 
-  const id = nanoid(10);
+db.posts.push(post);
+saveDB(db);
 
-  const post = {
-    id,
-    title,
-    content,
-    category: category || "Love",
-    sender: sender || "Anonymous",
-    createdAt: Date.now()
-  };
-
-  db.posts.push(post);
-  saveDB(db);
-
-  const link = `${req.protocol}://${req.get("host")}/post/${id}`;
-
-  res.json({
-    success: true,
-    link
-  });
+res.json({
+link:`${req.protocol}://${req.get("host")}/post/${id}`
+});
 });
 
-/* 💌 OPEN MESSAGE PAGE */
-app.get("/post/:id", (req, res) => {
-  const db = loadDB();
-  const post = db.posts.find(p => p.id === req.params.id);
+/* 💌 POST PAGE (FULL UI + MUSIC + HEARTS) */
+app.get("/post/:id",(req,res)=>{
+const db = loadDB();
+const post = db.posts.find(p=>p.id===req.params.id);
 
-  if (!post) {
-    return res.send("❌ Link not found");
-  }
+if(!post){
+return res.send("❌ Post not found");
+}
 
-  res.send(`
+res.send(`
 <!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>${post.title}</title>
 
-<meta property="og:title" content="${post.title}">
-<meta property="og:description" content="${post.content}">
-<meta property="og:type" content="website">
-
 <style>
+
 body{
 margin:0;
 font-family:sans-serif;
 background:linear-gradient(135deg,#0f172a,#1e293b);
 color:white;
+overflow:hidden;
+height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-height:100vh;
-overflow:hidden;
 }
 
-/* 💖 CARD */
+.bg{
+position:absolute;
+width:200%;
+height:200%;
+background:radial-gradient(circle,#ff4d6d33,#38bdf833,#22c55e33);
+animation:bg 10s infinite alternate;
+}
+
+@keyframes bg{
+0%{transform:translate(0,0);}
+100%{transform:translate(-10%,-10%);}
+}
+
 .card{
-width:90%;
+position:relative;
+z-index:2;
+width:92%;
 max-width:420px;
-background:#1e293b;
 padding:20px;
-border-radius:16px;
+border-radius:20px;
+background:rgba(255,255,255,0.06);
+backdrop-filter:blur(20px);
 text-align:center;
-animation: openCard 0.8s ease;
+animation:pop 0.8s ease;
 }
 
-/* ✨ OPEN ANIMATION */
-@keyframes openCard{
-from{
-opacity:0;
-transform:scale(0.8) rotateX(20deg);
-}
-to{
-opacity:1;
-transform:scale(1) rotateX(0);
-}
+@keyframes pop{
+0%{transform:scale(0.5);opacity:0;}
+100%{transform:scale(1);opacity:1;}
 }
 
-.tag{
-background:#ff4d6d;
-padding:5px 10px;
-border-radius:10px;
-font-size:12px;
-}
+h2{margin:0;font-size:20px;}
+p{font-size:15px;line-height:1.6;}
 
 button{
 width:100%;
 padding:12px;
 margin-top:10px;
 border:none;
-border-radius:10px;
-background:#22c55e;
-color:black;
+border-radius:12px;
 font-weight:bold;
+cursor:pointer;
 }
 
-/* 📌 FOOTER */
-.footer{
-margin-top:15px;
-font-size:12px;
-opacity:0.7;
+.copy{
+background:linear-gradient(45deg,#22c55e,#86efac);
 }
+
+.music{
+background:linear-gradient(45deg,#ff4d6d,#ffb3c1);
+}
+
+/* 💖 HEARTS */
+.heart{
+position:absolute;
+font-size:18px;
+animation:floatUp 6s linear infinite;
+}
+
+@keyframes floatUp{
+0%{transform:translateY(100vh);}
+100%{transform:translateY(-10vh);}
+}
+
+/* footer */
+.footer{
+margin-top:10px;
+font-size:11px;
+opacity:0.6;
+}
+
 </style>
 </head>
 
 <body>
 
+<div class="bg"></div>
+
+<!-- 🎧 MUSIC (works for all users) -->
+<audio id="bgmusic" loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+</audio>
+
 <div class="card">
 
 <h2>💖 ${post.title}</h2>
 
-<span class="tag">${post.category}</span>
-
-<p style="margin-top:15px">${post.content}</p>
+<p>${post.content}</p>
 
 <p>👤 ${post.sender}</p>
 
-<button onclick="copy()">📋 Copy Link</button>
+<button class="copy" onclick="copy()">📋 Copy Link</button>
+<button class="music" onclick="playMusic()">🎧 Play Music</button>
 
 <div class="footer">
-© 2026 Abdur Rahman | Nexvora Lab's Ofc
+Abdur Rahman | Nexvora Lab's Ofc
 </div>
 
 </div>
 
 <script>
+
+/* 📋 COPY */
 function copy(){
 navigator.clipboard.writeText(window.location.href);
-alert("Link Copied!");
+alert("Copied 💖");
 }
+
+/* 🎧 MUSIC FIX (ALL DEVICES) */
+function playMusic(){
+document.getElementById("bgmusic").play();
+}
+
+/* 💖 HEART SYSTEM (ALL USERS) */
+setInterval(()=>{
+let h=document.createElement("div");
+h.classList.add("heart");
+h.innerHTML="💖";
+h.style.left=Math.random()*100+"vw";
+document.body.appendChild(h);
+
+setTimeout(()=>h.remove(),6000);
+},300);
+
 </script>
 
 </body>
 </html>
-  `);
+`);
 });
 
-/* ❤️ HEALTH CHECK */
-app.get("/health", (req, res) => {
-  res.send("OK");
-});
-
-/* 🚀 START */
-app.listen(3000, () => {
-  console.log("🚀 Nexvora Love Space running on http://localhost:3000");
+/* 🚀 START SERVER */
+app.listen(3000,()=>{
+console.log("🚀 Nexvora Love Space running on http://localhost:3000");
 });
