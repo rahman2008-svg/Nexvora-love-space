@@ -1,60 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nexvora Love Space</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
-
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
-
 body{
-min-height:100vh;
-background:linear-gradient(135deg,#ff4d6d,#ff99b6,#ffe3ec);
+margin:0;
+font-family:sans-serif;
+background:linear-gradient(135deg,#0f172a,#1e293b);
 display:flex;
-flex-direction:column;
+justify-content:center;
 align-items:center;
-padding:20px;
+height:100vh;
 color:white;
+overflow:hidden;
 }
 
-/* HEADER */
-.header{
-text-align:center;
-margin-top:10px;
-}
-
-.header h1{
-font-size:28px;
-font-weight:800;
-}
-
-.header p{
-font-size:13px;
-opacity:0.9;
-}
-
-/* CARD */
-.card{
+/* 🌌 Animated Background */
+.bg{
+position:absolute;
 width:100%;
-max-width:420px;
-margin-top:20px;
-background:rgba(255,255,255,0.15);
-backdrop-filter:blur(20px);
-border-radius:22px;
-padding:18px;
-box-shadow:0 15px 40px rgba(0,0,0,0.2);
+height:100%;
+background:
+radial-gradient(circle at 20% 30%, #ff4d6d44, transparent),
+radial-gradient(circle at 80% 70%, #38bdf844, transparent);
+animation: moveBg 8s infinite alternate;
+}
+@keyframes moveBg{
+0%{transform:translateY(0);}
+100%{transform:translateY(-40px);}
 }
 
-/* INPUTS */
+/* 💖 LOGO ANIMATION */
+.logo{
+font-size:28px;
+text-align:center;
+margin-bottom:10px;
+animation: pop 1s ease;
+}
+@keyframes pop{
+0%{transform:scale(0);}
+100%{transform:scale(1);}
+}
+
+/* 💎 CARD */
+.container{
+position:relative;
+width:90%;
+max-width:420px;
+padding:25px;
+border-radius:20px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(15px);
+box-shadow:0 10px 30px rgba(0,0,0,0.6);
+transform-style:preserve-3d;
+transition:0.4s;
+animation: float 4s infinite ease-in-out;
+}
+
+/* 🌊 Floating Animation */
+@keyframes float{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-10px);}
+}
+
+.container:hover{
+transform:rotateX(5deg) rotateY(5deg) scale(1.02);
+}
+
+/* ✨ Inputs */
 input, textarea, select{
 width:100%;
 padding:12px;
@@ -62,164 +77,115 @@ margin-top:10px;
 border:none;
 border-radius:12px;
 outline:none;
-font-size:14px;
+background:#0f172a;
+color:white;
 }
 
-textarea{
-height:120px;
-resize:none;
-}
-
-/* BUTTON */
-.btn{
+/* 🔘 Button */
+button{
 width:100%;
 padding:12px;
 margin-top:12px;
 border:none;
-border-radius:14px;
-background:linear-gradient(135deg,#ff4d6d,#ff2e63);
+border-radius:12px;
+background:linear-gradient(45deg,#ff4d6d,#ff99b6);
 color:white;
-font-weight:600;
+font-weight:bold;
 cursor:pointer;
 transition:0.3s;
 }
 
-.btn:hover{
-transform:scale(1.03);
+button:hover{
+transform:scale(1.05);
+box-shadow:0 5px 20px #ff4d6d;
 }
 
-/* LINK BOX */
-.linkBox{
-margin-top:12px;
-padding:10px;
-background:rgba(255,255,255,0.2);
-border-radius:12px;
-font-size:12px;
-word-break:break-all;
+.copy{
+background:linear-gradient(45deg,#22c55e,#4ade80);
 }
 
-/* COPY BUTTON */
-.copyBtn{
-margin-top:8px;
-padding:8px;
-width:100%;
-border:none;
-border-radius:10px;
-background:white;
-color:#ff2e63;
-font-weight:600;
-cursor:pointer;
+/* 💌 RESULT ANIMATION */
+#result{
+margin-top:10px;
+animation: fadeIn 1s ease;
 }
 
-/* CATEGORY */
-.grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:8px;
-margin-top:12px;
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(20px);}
+to{opacity:1; transform:translateY(0);}
 }
 
-.cat{
-background:rgba(255,255,255,0.2);
-padding:10px;
-border-radius:12px;
+/* 📌 FOOTER */
+.footer{
+margin-top:15px;
 text-align:center;
-font-size:11px;
-cursor:pointer;
-}
-
-/* FOOTER */
-footer{
-margin-top:25px;
 font-size:12px;
-opacity:0.8;
-text-align:center;
+opacity:0.7;
+animation: fadeIn 2s ease;
 }
-
 </style>
 </head>
 
 <body>
 
-<div class="header">
-<h1>💖 Nexvora Love Space</h1>
-<p>Create Love • Emotion • Invitation Pages</p>
-</div>
+<div class="bg"></div>
 
-<div class="card">
+<div class="container">
+
+<div class="logo">💖 Nexvora Love Space</div>
 
 <input id="title" placeholder="Enter Title 💌">
-
 <textarea id="content" placeholder="Write your message ❤️"></textarea>
 
-<input id="sender" placeholder="Your Name 👤">
-
 <select id="category">
-<option>💖 Love</option>
-<option>🎉 Invitation</option>
-<option>🎂 Birthday</option>
-<option>🤝 Friend</option>
-<option>💔 Sorry</option>
-<option>💍 Anniversary</option>
+<option>Love</option>
+<option>Invitation</option>
+<option>Birthday</option>
+<option>Sorry</option>
+<option>Friend</option>
 </select>
 
-<button class="btn" onclick="create()">✨ Create Page</button>
+<input id="sender" placeholder="Your Name">
 
-<div id="link" class="linkBox">Your link will appear here...</div>
+<button onclick="create()">✨ Create Link</button>
 
-<button class="copyBtn" onclick="copyLink()">📋 Copy Link</button>
+<div id="result"></div>
 
-<div class="grid">
-<div class="cat">💖 Love</div>
-<div class="cat">🎉 Invite</div>
-<div class="cat">🎂 Birthday</div>
-<div class="cat">🤝 Friend</div>
-<div class="cat">💔 Sorry</div>
-<div class="cat">💍 Love</div>
+<div class="footer">
+© 2026 Abdur Rahman | Nexvora Lab's Ofc
 </div>
 
 </div>
-
-<footer>
-Abdur Rahman | Nexvora Lab's Ofc
-</footer>
 
 <script>
-
-let lastLink="";
-
-/* CREATE PAGE */
 async function create(){
+const data = {
+title: title.value,
+content: content.value,
+category: category.value,
+sender: sender.value
+};
 
-const title=document.getElementById("title").value;
-const content=document.getElementById("content").value;
-const category=document.getElementById("category").value;
-const sender=document.getElementById("sender").value;
-
-const res=await fetch("/api/create",{
+const res = await fetch("/api/post",{
 method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({title,content,category,sender})
+headers:{ "Content-Type":"application/json" },
+body: JSON.stringify(data)
 });
 
-const data=await res.json();
+const out = await res.json();
 
-lastLink=data.link;
-
-document.getElementById("link").innerHTML=
-"🔗 <b>Your Link:</b><br>"+data.link;
+result.innerHTML = `
+<input value="${out.link}" id="linkBox">
+<button class="copy" onclick="copy()">📋 Copy Link</button>
+`;
 }
 
-/* COPY LINK */
-function copyLink(){
-if(!lastLink){
-alert("No link yet!");
-return;
+function copy(){
+const input = document.getElementById("linkBox");
+input.select();
+document.execCommand("copy");
+alert("Link Copied!");
 }
-navigator.clipboard.writeText(lastLink);
-alert("Link Copied ✔");
-}
-
 </script>
 
 </body>
